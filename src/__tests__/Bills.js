@@ -28,7 +28,7 @@ describe("Given I am connected as an employee", () => {
       await waitFor(() => screen.getByTestId('icon-window'))
       const windowIcon = screen.getByTestId('icon-window')
       
-      //to-do write expect expression
+      //Expect ajouter pour verification comme demander
       expect(windowIcon.classList).toContain("active-icon");
 
     })
@@ -66,8 +66,9 @@ describe("Given I am connected as an employee", () => {
         icon.addEventListener('click', handleShowBill)
         userEvent.click(icon)
   
+        // Vérification si le modal s'ouvre 
         expect(handleShowBill).toHaveBeenCalled()
-        // Voir pour vérifier si le modal s'ouvre 
+        
 
       })
 
@@ -118,4 +119,3 @@ describe("Given I am connected as an employee", () => {
     })
   })
 })
-// Les option dans le script package.json --noStackTrace --silent 

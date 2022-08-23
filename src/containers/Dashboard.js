@@ -86,11 +86,7 @@ export default class {
   }
 
   handleEditTicket(e, bill, bills) {
-    
-    // Correction du bug d'affichage des note de frai côte admin 
-    // if (this.id === undefined || this.id !== bill.id) this.id = bill.id
-    // if (this.counter % 2 === 0) {
-      
+     
     if (this.id != bill.id) {
       bills.forEach(b => {
         $(`#open-bill${b.id}`).css({ background: '#0D5AE5' })
@@ -99,7 +95,7 @@ export default class {
       $(`#open-bill${bill.id}`).css({ background: '#2A2B35' })
       $('.dashboard-right-container div').html(DashboardFormUI(bill))
       $('.vertical-navbar').css({ height: '150vh' })
-      this.counter ++
+      // this.counter ++
       this.id = bill.id
     } else {
       $(`#open-bill${bill.id}`).css({ background: '#0D5AE5' })
@@ -108,7 +104,7 @@ export default class {
         <div id="big-billed-icon" data-testid="big-billed-icon"> ${BigBilledIcon} </div>
       `)
       $('.vertical-navbar').css({ height: '120vh' })
-      this.counter ++
+      // this.counter ++
       this.id = ""
     }
     $('#icon-eye-d').click(this.handleClickIconEye)
@@ -138,22 +134,26 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
-    if (this.counter === undefined || this.index !== index) this.counter = 0
+    if (this.counter === undefined ) this.counter = {1 : false, 2:false,3:false}
     if (this.index === undefined || this.index !== index) this.index = index
-    if (this.counter % 2 === 0) {
+
+    if (this.counter[index] === false) {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(0deg)'})
       $(`#status-bills-container${this.index}`)
         .html(cards(filteredBills(bills, getStatus(this.index))))
-      this.counter ++
+      this.counter[index] = !this.counter[index]
     } else {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(90deg)'})
       $(`#status-bills-container${this.index}`)
         .html("")
-      this.counter ++
+      this.counter[index] = !this.counter[index]
     }
 
     bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      let status = getStatus(index);
+      if (status === bill.status) {
+        $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      }
     })
 
     return bills

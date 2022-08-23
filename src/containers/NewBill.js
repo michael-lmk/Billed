@@ -24,6 +24,7 @@ export default class NewBill {
     const fileName = filePath[filePath.length-1]
     const extension = fileName.split('.').pop();
 
+    // Bloque de vérification de l'extention d'image + message erreur
     if (!["png", "jpeg", "jpg"].includes(extension) ) {
       let inputFile = this.document.querySelector(`input[type="file"]`);
       inputFile.classList.replace("blue-border", "red-border");
@@ -34,6 +35,7 @@ export default class NewBill {
       inputFile.after(showErr);
       return;
     }
+
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
