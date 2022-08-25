@@ -164,15 +164,16 @@ describe("Given I am connected as an employee", () => {
 
       let res = mockStore.bills(() => {
         return {
-          create : () =>  {
-            return Promise.reject(new Error("Erreur 404"))
+          list : () =>  {
+            return Promise.reject(new Error("Erreur 50"))
           }
-        }})
-        
+      }})
+
       newBill.onNavigate(ROUTES_PATH["Bills"], {data: res},"Erreur 404" )
-      console.log(screen);
+     
       await new Promise(process.nextTick);
       const message = await screen.getByText(/Erreur 404/)
+  
       expect(message).toBeTruthy()
 
     });
