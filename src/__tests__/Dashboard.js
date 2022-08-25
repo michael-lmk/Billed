@@ -43,6 +43,7 @@ describe('Given I am connected as an Admin', () => {
   describe('When I am on Dashboard page but back-end send an error message', () => {
     test('Then, Error page should be rendered', () => {
       document.body.innerHTML = DashboardUI({ error: 'some error message' })
+      console.log(screen.getAllByText('Erreur'));
       expect(screen.getAllByText('Erreur')).toBeTruthy()
     })
   })
@@ -282,6 +283,7 @@ describe("Given I am a user connected as Admin", () => {
             return Promise.reject(new Error("Erreur 404"))
           }
         }})
+        
       window.onNavigate(ROUTES_PATH.Dashboard)
       await new Promise(process.nextTick);
       const message = await screen.getByText(/Erreur 404/)

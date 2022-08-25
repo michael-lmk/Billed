@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "jest --coverage --verbose false"
+    "test": "jest --coverage -- --verbose false"
   },
   "jest": {
     "verbose": false,

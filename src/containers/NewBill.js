@@ -29,7 +29,6 @@ export default class NewBill {
       let inputFile = this.document.querySelector(`input[type="file"]`);
       inputFile.classList.replace("blue-border", "red-border");
       let showErr = this.document.createElement("span");
-      console.log(showErr);
       showErr.classList.add("error-Format");
       showErr.innerText = `Format incorrect ! (Format autorisé : "png", "jpeg", "jpg")`
       inputFile.after(showErr);
@@ -50,7 +49,6 @@ export default class NewBill {
         }
       })
       .then(({fileUrl, key}) => {
-        console.log(fileUrl)
         this.billId = key
         this.fileUrl = fileUrl
         this.fileName = fileName
