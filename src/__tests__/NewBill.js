@@ -11,6 +11,7 @@ import { localStorageMock } from "../__mocks__/localStorage.js";
 import { ROUTES, ROUTES_PATH } from "../constants/routes";
 import mockStore from "../__mocks__/store";
 
+
 const inputData = {
   id: "qcCK3SzECmaZAGRrHjaC",
   status: "refused",
@@ -139,8 +140,8 @@ describe("Given I am connected as an employee", () => {
     test("Then error page should be rendered", async () => {
       document.body.innerHTML = NewBillUI();
 
-      const onNavigate = (pathname) => {
-        document.body.innerHTML = ROUTES({ pathname });
+      const onNavigate = (pathname, data, error) => {
+        document.body.innerHTML = ROUTES({ pathname, data, error });
       };
 
       Object.defineProperty(window, "localStorage", {
@@ -160,15 +161,16 @@ describe("Given I am connected as an employee", () => {
         store,
         localStorage,
       });
-      
-      mockStore.bills(() => {
+
+      let res = mockStore.bills(() => {
         return {
           create : () =>  {
             return Promise.reject(new Error("Erreur 404"))
           }
         }})
         
-      window.onNavigate(ROUTES_PATH.Dashboard)
+      newBill.onNavigate(ROUTES_PATH["Bills"], {data: res},"Erreur 404" )
+      console.log(screen);
       await new Promise(process.nextTick);
       const message = await screen.getByText(/Erreur 404/)
       expect(message).toBeTruthy()
